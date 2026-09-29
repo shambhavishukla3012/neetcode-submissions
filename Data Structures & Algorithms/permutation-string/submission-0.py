@@ -1,0 +1,23 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        need = {}                                   
+        for ch in s1:
+            need[ch] = need.get(ch, 0) + 1
+
+        window = {}                                 
+        k = len(s1)
+        L = 0
+
+        for R in range(len(s2)):
+            window[s2[R]] = window.get(s2[R], 0) + 1       
+
+            if R - L + 1 > k:                              
+                window[s2[L]] -= 1                         
+                if window[s2[L]] == 0:
+                    del window[s2[L]]                      
+                L += 1
+
+            if R - L + 1 == k and window == need:          
+                return True
+
+        return False
